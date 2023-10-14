@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { ref } from 'vue';
-import CreateList from "../components/CreateList.vue";
 import Lists from "../components/Lists.vue";
 import { useListStore } from "../store/useListStore.js";
 import { useRouter } from 'vue-router';
@@ -10,7 +8,7 @@ const router = useRouter();
 
 function creatNewListID() {
     listStore.addList(listStore.lists.length + 1)
-    const newList = listStore.lists[listStore.listCount - 1];
+    const newList = listStore.lists[listStore.listCount() - 1];
     const newListId = newList.id; // Replace with the actual ID field
 
     // Use Vue Router to navigate to the new list's route
@@ -19,16 +17,24 @@ function creatNewListID() {
 </script>
 
 <template>
-<div class="px-[24px]">
+<div 
+    class="
+    px-[24px]"
+>
 	<IconMingcuteSettings3Fill 
-		class="text-[36px]"/>
-	<span class="font-bold text-[36px]">
+		class="
+        text-[36px]"
+    />
+	<span 
+        class="
+        font-bold 
+        text-[36px]"
+    >
 		Hello Beverly
 	</span>
-	<!-- <IconMingcuteAddCircleFill class="addCategory text-[30px]"/> -->
 
 	<button
-		v-if="listStore.listCount === 0" 
+		v-if="listStore.listCount() === 0" 
 		class="
 		border-2 border-[#2f4e31] rounded-xl 
 		flex flex-col gap-[4px] place-items-center 
@@ -36,28 +42,31 @@ function creatNewListID() {
 		bg-[#84ae88]"
         @click="creatNewListID"
 	>
-		<IconMingcuteAddCircleFill class="addCategory text-[30px]"/>
-		<span class="text-[#2f4e31] font-bold">Create New List</span>
+		<IconMingcuteAddCircleFill 
+            class="
+            bg-[#2f4e31] 
+            text-[30px]"
+        />
+		<span 
+            class="
+            text-[#2f4e31] 
+            font-bold"
+        >
+            Create New List
+        </span>
     </button>
 	
 	<div v-else>
 		<IconMingcuteAddCircleFill 
-        class="
-        text-[#2f4e31]
-        text-[36px]
-        absolute
-        top-[24px]
-        right-[24px]"
-        @click="creatNewListID"
-    />
+            class="
+            text-[#2f4e31]
+            text-[36px]
+            absolute
+            top-[24px]
+            right-[24px]"
+            @click="creatNewListID"
+        />
 	</div>
-    
     <Lists/>
 </div>
 </template>
-
-<style>
-.addCategory {
-	color: #2f4e31;
-}
-</style>

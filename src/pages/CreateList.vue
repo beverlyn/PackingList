@@ -4,17 +4,19 @@ import ListHeader from '../components/ListHeader.vue';
 import individualToDoItem from '../components/individualToDoItem.vue';
 import { useRoute } from 'vue-router';
 import { useListStore } from '../store/useListStore';
+import ListDropDownMenu from '../components/ListDropDownMenu.vue';
 
 const todoText = ref('');
-const store = useListStore();
-const newTodoText = ref('');
 
 const route = useRoute();
 const listID = Number(route.params.id);
 
+const store = useListStore();
 const todos = computed(() => {
 	const list = store.lists.find((list) => list.id === listID);
-	return list.todos;
+	if (list) {
+		return list.todos;
+	}
 })
 
 function addItemAndClear(listID: number, newTodo: string) {
@@ -27,27 +29,33 @@ function addItemAndClear(listID: number, newTodo: string) {
 
 function getListCount(item: Number) {
 	const list = store.lists.find((list) => list.id === item);
-	return list.todos.length;
+	if (list) {
+		return list.todos.length;
+	}
 }
 </script>
 
 <template>
-<router-link  
-:to="{ path: `/` }" 
+<div 
+	class="w-min"
 >
-	<IconMingcuteArrowLeftFill 
-		class="
-		mx-[16px] 
-		mb-[16px] 
-		text-[32px]"
-	/>
-</router-link>
+	<router-link  
+	:to="{ path: `/` }"
+	>
+		<IconMingcuteArrowLeftFill 
+			class="
+			mx-[16px] mb-[16px] 
+			text-[32px]"
+		/>
+	</router-link>
+</div>
+<ListDropDownMenu :listID="listID"/>
 
 <div 
 	class="
 	bg-white 
 	h-screen 
-	w-screen 
+	w-full 
 	p-[16px] 
 	rounded-xl 
 	text-black"
