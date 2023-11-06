@@ -82,7 +82,7 @@ const {floatingStyles} = useFloating(reference, floating,{
     >
         <button 
             @click="showModal = true"
-            class="flex gap-2 hover:bg-gray-200">
+            class="flex gap-2 hover:bg-gray-200 text-[20px]">
             <IconMingcuteDelete2Fill class="self-center"/>
             Delete List 
         </button>
@@ -92,11 +92,11 @@ const {floatingStyles} = useFloating(reference, floating,{
 <RemoveListModal 
     v-if="showModal">
     <template v-slot:header>
-        Are you sure you'd like to delete this list?
+        Delete list?
     </template>
 
     <template v-slot:body>
-        Action cannot be reversed
+        This action can't be undone
     </template>
     <template v-slot:footer>
         <button @click="showModal = false">

@@ -21,6 +21,7 @@ body {
 }
 
 #app {
+  min-width: 320px;
   max-width: 380px;
   margin: 16px auto;
   /* padding: 2rem; */

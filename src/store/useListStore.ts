@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 import { defineStore } from "pinia";
+import { useLocalStorage } from '@vueuse/core';
 
 type Todo = {
 	id: number;
@@ -15,45 +16,47 @@ type List = {
 	todos: Todo[];
 }
 
+// 	const lists: List[] = useLocalStorage("lists", reactive([
 export const useListStore = defineStore("listName", () => {
-	const lists: List[] = reactive([
-			{
-				id: 1,
-				name: "Grocery List",
-				dateCreated: new Date(),
-				dateEdited: new Date(),
-				todos: [
-					{
-						id: 1,
-						text: "Eggs",
-						completed: false
-					},
-					{
-						id: 2,
-						text: "Carrots",
-						completed: false
-					},
-					{
-						id: 3,
-						text: "Cheese",
-						completed: false
-					},
-				]
-			}
-		]);
+	// const lists = useLocalStorage("lists", reactive([ 
+	// 		{
+	// 			id: 1,
+	// 			name: "Grocery List",
+	// 			dateCreated: new Date(),
+	// 			dateEdited: new Date(),
+	// 			todos: [
+	// 				{
+	// 					id: 1,
+	// 					text: "Eggs",
+	// 					completed: false
+	// 				},
+	// 				{
+	// 					id: 2,
+	// 					text: "Carrots",
+	// 					completed: false
+	// 				},
+	// 				{
+	// 					id: 3,
+	// 					text: "Cheese",
+	// 					completed: false
+	// 				},
+	// 			]
+	// 		}
+	// 	]));
+	const lists = useLocalStorage("lists", reactive<List[]>([]));
 
 		const addList = (
 			ID: number
 		) => {
-			lists.push({ id: ID, name: "To Do List", dateCreated: new Date(), dateEdited: new Date(), todos: [] });
+			lists.value.push({ id: ID, name: "To Do List", dateCreated: new Date(), dateEdited: new Date(), todos: [] });
 		};
 
 		const removeList = (
 			listID: number
 		) => {
-			const index = lists.findIndex((list) => list.id === listID);
+			const index = lists.value.findIndex((list) => list.id === listID);
 			if (index !== -1) {
-				lists.splice(index, 1);
+				lists.value.splice(index, 1);
 			}
 		};
 
@@ -61,7 +64,7 @@ export const useListStore = defineStore("listName", () => {
 			listID: number, 
 			newListName: string
 		) => {
-			const list = lists.find((list) => list.id === listID);
+			const list = lists.value.find((list) => list.id === listID);
 			if (list) {
 				list.name = newListName;
 				list.dateEdited = new Date();
@@ -74,7 +77,7 @@ export const useListStore = defineStore("listName", () => {
 			listID: number,
 			newItem: string,
 		) => {
-			const list = lists.find((list) => list.id === listID);
+			const list = lists.value.find((list) => list.id === listID);
 			if (list) {
 				const id = list.todos.length + 1;
 				const newTodo: Todo = {
@@ -90,7 +93,7 @@ export const useListStore = defineStore("listName", () => {
 			listID: number, 
 			todoID: number
 		) => {
-			const list = lists.find((list) => list.id === listID);
+			const list = lists.value.find((list) => list.id === listID);
 			if (list) {
 				const index = list.todos.findIndex((todo) => todo.id === todoID);
 				if (index !== -1) {
@@ -104,7 +107,7 @@ export const useListStore = defineStore("listName", () => {
 			todoID: number, 
 			newToDo: string
 		) => {
-			const list = lists.find((list) => list.id === listID);
+			const list = lists.value.find((list) => list.id === listID);
 			if (list) {
 				const todo = list.todos.find((todo) => todo.id === todoID);
 				if (todo) {
@@ -119,7 +122,7 @@ export const useListStore = defineStore("listName", () => {
 			listID: number, 
 			todoID: number
 		) => {
-			const list = lists.find((list) => list.id === listID);
+			const list = lists.value.find((list) => list.id === listID);
 			if (list) {
 				const todo = list.todos.find((todo) => todo.id === todoID);
 				if (todo) {
@@ -131,14 +134,7 @@ export const useListStore = defineStore("listName", () => {
 		};
 
 		const listCount = () => {
-			return lists.length;
-		};
-		
-		const getListName = (listID) => {
-			const list = lists.find((list) => list.id === listID);
-			if (list) {
-				return list.name;
-			}
+			return lists.value.length;
 		};
 
 	return {
@@ -151,7 +147,6 @@ export const useListStore = defineStore("listName", () => {
 		editToDoItem,
 		toggleCompleted,
 		listCount, 
-		getListName
 	};
 });
 

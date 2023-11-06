@@ -19,18 +19,19 @@ function creatNewListID() {
 <template>
 <div 
     class="
-    px-[24px]"
+    px-[24px]
+    relative"
 >
-	<IconMingcuteSettings3Fill 
+	<!-- <IconMingcuteSettings3Fill 
 		class="
         text-[36px]"
-    />
+    /> -->
 	<span 
         class="
         font-bold 
         text-[36px]"
     >
-		Hello Beverly
+		Hello, Name
 	</span>
 
 	<button
@@ -44,7 +45,6 @@ function creatNewListID() {
 	>
 		<IconMingcuteAddCircleFill 
             class="
-            bg-[#2f4e31] 
             text-[30px]"
         />
 		<span 
@@ -62,8 +62,8 @@ function creatNewListID() {
             text-[#2f4e31]
             text-[36px]
             absolute
-            top-[24px]
-            right-[24px]"
+            top-[4px]
+            right-[48px]"
             @click="creatNewListID"
         />
 	</div>

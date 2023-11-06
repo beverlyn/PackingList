@@ -36,20 +36,25 @@ function getListCount(item: Number) {
 </script>
 
 <template>
+
 <div 
-	class="w-min"
->
-	<router-link  
-	:to="{ path: `/` }"
+	class="
+	mx-[16px] mb-[16px]
+	flex space-between items-center
+	w-[100%] 
+	text-[32px]">
+	<span 
+		class="w-min"
 	>
-		<IconMingcuteArrowLeftFill 
-			class="
-			mx-[16px] mb-[16px] 
-			text-[32px]"
-		/>
-	</router-link>
+		<router-link  
+		:to="{ path: `/` }"
+		>
+			<IconMingcuteArrowLeftFill />
+		</router-link>
+	</span>
+	<ListDropDownMenu :listID="listID"/>
 </div>
-<ListDropDownMenu :listID="listID"/>
+
 
 <div 
 	class="
